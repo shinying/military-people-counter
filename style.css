@@ -1,0 +1,16 @@
+.hidden {
+    visibility: hidden;
+}
+
+.btn-outline-danger:not(.active):hover {
+    color: var(--bs-danger);
+    background-color: transparent !important;
+}
+.btn-outline-info:not(.active):hover {
+    color: var(--bs-info);
+    background-color: transparent !important;
+}
+.btn-outline-secondary:not(.active):hover {
+    color: var(--bs-secondary);
+    background-color: transparent !important;
+}
