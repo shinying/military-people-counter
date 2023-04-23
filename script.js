@@ -10,9 +10,9 @@ const BTN_SELECTED_CLASS = [OFFICER_BTN_SELECTED, SERGERT_BTN_SELECTED, SOILDER_
 
 
 $(function() {
-    var member_num = [0, 0, 0];
-    var member_rank = {};
-    var selected_members = new Set();
+    let member_num = [0, 0, 0];
+    let member_rank = {};
+    let selected_members = new Set();
 
     if (localStorage.length > 0) {
         for (let key in localStorage) {
