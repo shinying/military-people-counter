@@ -15,10 +15,10 @@ $(function() {
     var selected_members = new Set();
 
     if (localStorage.length > 0) {
-        for (var key in localStorage) {
-            var item = localStorage.getItem(key);
+        for (let key in localStorage) {
+            let item = localStorage.getItem(key);
             if (!item) continue;
-            var member = JSON.parse(item);
+            let member = JSON.parse(item);
             add_member(member.name, member.rank, key);
             if (member.selected) {
                 select_member($(`#${key}`));
@@ -31,11 +31,11 @@ $(function() {
         if (hash == "") {
             hash = MD5.generate(name);
         }
-        var box = $("<div></div>").attr({
+        let box = $("<div></div>").attr({
             class: "col-auto",
             id: `div-${hash}`,
         });
-        var member = $(`<button>${name}</button>`).attr({
+        let member = $(`<button>${name}</button>`).attr({
             type: "button",
             class: `btn ${BTN_CLASS[rank]}`,
             id: hash,
@@ -53,14 +53,14 @@ $(function() {
 
     function select_member_event() {
         select_member($(this));
-        var id = $(this).attr("id");
-        var data = JSON.parse(localStorage.getItem(id));
+        let id = $(this).attr("id");
+        let data = JSON.parse(localStorage.getItem(id));
         data["selected"] = true;
         localStorage.setItem(id, JSON.stringify(data));
     }
 
     function select_member(member) {
-        var rank = member_rank[member.attr("id")];
+        let rank = member_rank[member.attr("id")];
         // $(this).removeClass(BTN_CLASS[rank]).addClass(BTN_SELECTED_CLASS[rank]);
         member.addClass("active");
         member.off("click", select_member_event);
@@ -74,14 +74,14 @@ $(function() {
     
     function deselect_member_event() {
         deselect_member($(this));
-        var id = $(this).attr("id");
-        var data = JSON.parse(localStorage.getItem(id));
+        let id = $(this).attr("id");
+        let data = JSON.parse(localStorage.getItem(id));
         data["selected"] = false;
         localStorage.setItem(id, JSON.stringify(data));
     }
 
     function deselect_member(member) {
-        var rank = member_rank[member.attr("id")];
+        let rank = member_rank[member.attr("id")];
         // $(this).removeClass(BTN_SELECTED_CLASS[rank]).addClass(BTN_CLASS[rank]);
         member.removeClass("active");
         member.off("click", deselect_member_event);
@@ -95,7 +95,7 @@ $(function() {
 
     function update_ui(rank=-1) {
         if (rank < 0) {
-            for (var i = 0; i < member_num.length; i++) {
+            for (let i = 0; i < member_num.length; i++) {
                 $(`${RANKS[i]}num`).text(member_num[i]);
             }
         } else {
@@ -112,24 +112,24 @@ $(function() {
             localStorage.removeItem(member);
         });
         selected_members.clear();
-        for (var i = 0; i < member_num.length; i++) {
+        for (let i = 0; i < member_num.length; i++) {
             member_num[i] = 0;
         }
         update_ui();
     }
 
     $("#add-btn").click(function() {
-        var name = $("#input-name").val();
+        let name = $("#input-name").val();
         if (!name) {
             alert("請輸入人名");
             return;
         }
-        var id = MD5.generate(name);
+        let id = MD5.generate(name);
         if (id in member_rank) {
             alert("人名重複了");
             return;
         }
-        var rank = $("#input-class option:selected").val();
+        let rank = $("#input-class option:selected").val();
         if (rank < 0) {
             alert("請選擇階級");
             return;
