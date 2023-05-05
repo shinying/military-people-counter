@@ -4,27 +4,43 @@ const SERGENT_BTN = "btn-outline-info";
 const SERGERT_BTN_SELECTED = "btn-info";
 const SOILDER_BTN = "btn-outline-secondary";
 const SOILDER_BTN_SELECTED = "btn-secondary";
-const RANKS = ["#officer-", "#sergeant-", "#soilder-"];
+const RANKS = ["#officer", "#sergeant", "#soilder"];
 const BTN_CLASS = [OFFICER_BTN, SERGENT_BTN, SOILDER_BTN];
 const BTN_SELECTED_CLASS = [OFFICER_BTN_SELECTED, SERGERT_BTN_SELECTED, SOILDER_BTN_SELECTED];
 
 
 $(function() {
+    let counts = 0;
     let member_num = [0, 0, 0];
     let member_rank = {};
     let selected_members = new Set();
 
-    if (localStorage.length > 0) {
+    function read_from_local() {
+        if (localStorage.length == 0)
+            return;
+        cache = [];
         for (let key in localStorage) {
             let item = localStorage.getItem(key);
             if (!item) continue;
             let member = JSON.parse(item);
-            add_member(member.name, member.rank, key);
-            if (member.selected) {
-                select_member($(`#${key}`));
+            cache.push(member);
+            counts++;
+        }
+        if (!cache[0].hasOwnProperty("index") || !cache[0].hasOwnProperty("key")) {
+            console.log("Clear localStorage")
+            localStorage.clear();
+            counts = 0;
+            return;
+        }
+        cache.sort(function(a, b) { return a.index - b.index; });
+        for (member of cache) {
+            add_member(member["name"], member["rank"], member["key"]);
+            if (member["selected"]) {
+                select_member($(`#${member["key"]}`));
             }
         }
     }
+    read_from_local();
 
 
     function add_member(name, rank, hash="") {
@@ -44,7 +60,7 @@ $(function() {
         member.click(select_member_event);
 
         box.append(member);
-        $(`${RANKS[rank]}list`).append(box);
+        $(`${RANKS[rank]}-list`).append(box);
         // $(RANKS[rank]+"label").removeClass("hidden");
 
         member_rank[hash] = rank;
@@ -96,10 +112,10 @@ $(function() {
     function update_ui(rank=-1) {
         if (rank < 0) {
             for (let i = 0; i < member_num.length; i++) {
-                $(`${RANKS[i]}num`).text(member_num[i]);
+                $(`${RANKS[i]}-num`).text(member_num[i]);
             }
         } else {
-            $(`${RANKS[rank]}num`).text(member_num[rank]);
+            $(`${RANKS[rank]}-num`).text(member_num[rank]);
         }
         $("#total-num").text(selected_members.size);
     }
@@ -134,11 +150,13 @@ $(function() {
             alert("請選擇階級");
             return;
         }
-        add_member(name, rank, id);        
+        let hash = add_member(name, rank, id);        
         localStorage.setItem(id, JSON.stringify({
             "name": name,
             "rank": rank,
-            "selected": false
+            "selected": false,
+            "key": hash,
+            "index": counts++,
         }));
         $("#input-name").val('');
     });
@@ -152,5 +170,6 @@ $(function() {
             delete member_rank[member];
         }
         localStorage.clear();
+        counts = 0;
     })
 });
