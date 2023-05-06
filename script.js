@@ -24,7 +24,7 @@ $(function() {
             if (!item) continue;
             let member = JSON.parse(item);
             cache.push(member);
-            counts++;
+            counts = Math.max(counts, member["index"]);
         }
         if (!cache[0].hasOwnProperty("index") || !cache[0].hasOwnProperty("key")) {
             console.log("Clear localStorage")
@@ -33,7 +33,7 @@ $(function() {
             return;
         }
         cache.sort(function(a, b) { return a.index - b.index; });
-        for (member of cache) {
+        for (let member of cache) {
             add_member(member["name"], member["rank"], member["key"]);
             if (member["selected"]) {
                 select_member($(`#${member["key"]}`));
@@ -145,7 +145,7 @@ $(function() {
             alert("人名重複了");
             return;
         }
-        let rank = $("#input-class option:selected").val();
+        let rank = parseInt($("#input-class option:selected").val());
         if (rank < 0) {
             alert("請選擇階級");
             return;
@@ -156,7 +156,7 @@ $(function() {
             "rank": rank,
             "selected": false,
             "key": hash,
-            "index": counts++,
+            "index": ++counts,
         }));
         $("#input-name").val('');
     });
