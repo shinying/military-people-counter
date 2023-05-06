@@ -42,7 +42,6 @@ $(function() {
     }
     read_from_local();
 
-
     function add_member(name, rank, hash="") {
         if (hash == "") {
             hash = MD5.generate(name);
@@ -134,8 +133,22 @@ $(function() {
         update_ui();
     }
 
-    $("#add-btn").click(function() {
-        let name = $("#input-name").val();
+    let options_opened = false;
+    $("#options-btn").click(function() {
+        if (options_opened) {
+            $("#add-member-div").hide();
+            $("#add-reason-div").hide();
+            $("#options-img").attr("src", "assets/options.png");
+        } else {
+            $("#add-member-div").show();
+            $("#add-reason-div").show();
+            $("#options-img").attr("src", "assets/options-selected.png");
+        }
+        options_opened = !options_opened;
+    });
+
+    $("#add-member-btn").click(function() {
+        let name = $("#input-member").val();
         if (!name) {
             alert("請輸入人名");
             return;
@@ -158,7 +171,7 @@ $(function() {
             "key": hash,
             "index": ++counts,
         }));
-        $("#input-name").val('');
+        $("#input-member").val('');
     });
 
     $("#delete-btn").click(delete_members);

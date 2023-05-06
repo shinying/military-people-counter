@@ -12,10 +12,19 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="mt-4">出席人數計算機</h1>
-      <div class="row mt-4 gx-2 align-items-center">
+      <div class="row mt-2 align-items-center">
+        <div class="col mt-2">
+          <h1>出席人數計算機</h1>
+        </div>
+        <div class="col-3">
+          <button class="btn" id="options-btn" type="button">
+            <img src="assets/options.png" height="30em" id="options-img">
+          </button>
+        </div>
+      </div>
+      <div class="row mt-3 gx-2 align-items-center" id="add-member-div" style="display: none;">
         <div class="col">
-          <input type="text" class="form-control" id="input-name" placeholder="人名" />
+          <input type="text" class="form-control" id="input-member" placeholder="人員" />
         </div>
         <div class="col-3">
           <select class="form-select" id="input-class">
@@ -26,7 +35,16 @@
           </select>
         </div>
         <div class="col-3">
-          <button class="btn btn-dark" id="add-btn">新增</button>
+          <button class="btn btn-dark" id="add-member-btn">新增</button>
+        </div>
+      </div>
+
+      <div class="row mt-2 gx-2 align-items-center" id="add-reason-div" style="display: none;">
+        <div class="col">
+          <input type="text" class="form-control" id="input-reason" placeholder="事故" />
+        </div>
+        <div class="col-3">
+          <button class="btn btn-dark" id="add-reason-btn">新增</button>
         </div>
       </div>
 
