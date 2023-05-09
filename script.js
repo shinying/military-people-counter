@@ -308,14 +308,14 @@ $(function() {
     let options_opened = false;
     function toggle_options() {
         if (options_opened) {
-            $("#add-member-div").hide();
-            $("#add-reason-div").hide();
+            // $("#add-member-div").hide();
+            // $("#add-reason-div").hide();
             $("#options-btn").html("<i class=\"bi bi-plus-circle\"></i>");
             $("#deletion-btn").css("opacity", "1");
             $("#deletion-btn").click(toggle_deletion);
         } else {
-            $("#add-member-div").show();
-            $("#add-reason-div").show();
+            // $("#add-member-div").show();
+            // $("#add-reason-div").show();
             $("#options-btn").html("<i class=\"bi bi-plus-circle-fill\"></i>");
             $("#deletion-btn").css("opacity", "0.5");
             $("#deletion-btn").off("click");
@@ -356,10 +356,10 @@ $(function() {
     let info_opened = false;
     $("#info-btn").click(function() {
         if (info_opened) {
-            $("#quickstart").hide();
+            // $("#quickstart").hide();
             $("#info-btn").html("<i class=\"bi bi-info-circle\"></i>");
         } else {
-            $("#quickstart").show();
+            // $("#quickstart").show();
             $("#info-btn").html("<i class=\"bi bi-info-circle-fill\"></i>");
         }
         info_opened = !info_opened;

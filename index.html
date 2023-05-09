@@ -20,9 +20,9 @@
           <h1>出席人數計算機</h1>
         </div>
         <div class="col-auto">
-          <button class="btn px-2" id="info-btn" type="button" style="font-size: 1.5em;">
+          <button class="btn px-2" id="info-btn" type="button" style="font-size: 1.5em;" data-bs-toggle="collapse" data-bs-target="#quickstart" aria-expanded="false" aria-controls="quickstart">
             <i class="bi bi-info-circle"></i></button>
-          <button class="btn px-2" id="options-btn" type="button" style="font-size: 1.5em;">
+          <button class="btn px-2" id="options-btn" type="button" style="font-size: 1.5em;" data-bs-toggle="collapse" data-bs-target="#add-new-div" aria-expanded="false" aria-controls="add-new-div">
             <i class="bi bi-plus-circle"></i>
           </button>
           <button class="btn px-2" id="deletion-btn" type="button" style="font-size: 1.5em;">
@@ -32,7 +32,7 @@
       </div>
 
       <!-- Quickstart -->
-      <div class="accordion mt-3 mb-4" id="quickstart" style="display: none;">
+      <div class="accordion mt-3 mb-4 collapse" id="quickstart">
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -54,7 +54,7 @@
           </h2>
           <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#quickstart">
             <div class="accordion-body">
-              休息是為了走得到下個休息的地方，我們用選擇格子紀錄人員的出缺席。<br>
+              休息是為了走到下個休息的地方，我們用選擇格子紀錄人員的出缺席。<br>
               所有事故都不選顯示的是人員的出席狀況，填充顏色的格子表示出席的人。<br>
               點選任一個事故就可以選擇因為該事故缺席的人。我們會幫你計算剩下的出席人數。<br>
               如果某個人已經在別的事故被選過了，再選一次的話會算在之後選的事故喔。
@@ -70,7 +70,7 @@
           <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#quickstart">
             <div class="accordion-body">
               人員流動如流水，點選右上角 <i class="bi bi-trash3"></i> 會出現兩個刪除按鍵。<br>
-              你可以先選擇部分事故和人員並刪除他們，或直接刪除所有資料。
+              你可以只選擇部分事故和人員並刪除他們，或直接刪除所有資料。
             </div>
           </div>
         </div>
@@ -101,30 +101,32 @@
       </div>
 
       <!-- Row for adding reasons -->
-      <div class="row gx-2 mt-2 align-items-center" id="add-reason-div" style="display: none;">
-        <div class="col">
-          <input type="text" class="form-control" id="input-reason" placeholder="事故" />
+      <div class="collapse" id="add-new-div">
+        <div class="row gx-2 mt-2 align-items-center" id="add-reason-div">
+          <div class="col">
+            <input type="text" class="form-control" id="input-reason" placeholder="事故" />
+          </div>
+          <div class="col-3">
+            <button class="btn btn-dark" id="add-reason-btn">新增</button>
+          </div>
         </div>
-        <div class="col-3">
-          <button class="btn btn-dark" id="add-reason-btn">新增</button>
-        </div>
-      </div>
 
-      <!-- Row for adding members -->
-      <div class="row gx-2 mt-2 align-items-center" id="add-member-div" style="display: none;">
-        <div class="col">
-          <input type="text" class="form-control" id="input-member" placeholder="人員" />
-        </div>
-        <div class="col-3">
-          <select class="form-select" id="input-class">
-            <option value="-1">階級</option>
-            <option value="0">軍官</option>
-            <option value="1">士官</option>
-            <option value="2">士兵</option>
-          </select>
-        </div>
-        <div class="col-3">
-          <button class="btn btn-dark" id="add-member-btn">新增</button>
+        <!-- Row for adding members -->
+        <div class="row gx-2 mt-2 align-items-center" id="add-member-div">
+          <div class="col">
+            <input type="text" class="form-control" id="input-member" placeholder="人員" />
+          </div>
+          <div class="col-3">
+            <select class="form-select" id="input-class">
+              <option value="-1">階級</option>
+              <option value="0">軍官</option>
+              <option value="1">士官</option>
+              <option value="2">士兵</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-dark" id="add-member-btn">新增</button>
+          </div>
         </div>
       </div>
 
