@@ -1,6 +1,7 @@
 const OFFICER_BTN = "btn-outline-danger";
 const SERGENT_BTN = "btn-outline-info";
 const SOILDER_BTN = "btn-outline-secondary";
+const BADGE_COLOR = "bg-dark";
 const RANKS = ["#officer", "#sergeant", "#soilder"];
 const BTN_CLASS = [OFFICER_BTN, SERGENT_BTN, SOILDER_BTN];
 
@@ -63,7 +64,7 @@ $(function() {
                 return;
             }
 
-            add_member(detail["name"], detail["rank"], detail["key"]);
+            add_member(detail["name"], detail["rank"], detail["key"], detail["reason"]);
             if (detail["reason"]) {
                 $(`#${detail["key"]}`).removeClass("active");
             } else {
@@ -75,7 +76,7 @@ $(function() {
     read_from_local();
 
 
-    function add_member(name, rank, id="") {
+    function add_member(name, rank, id="", reason="") {
         if (!id) {
             id = hash(name);
         }
@@ -83,8 +84,8 @@ $(function() {
             class: "col-auto",
             id: `div-${id}`,
         });
-        let cls = `btn ${BTN_CLASS[rank]}`;
-        if (!selected_reason) {
+        let cls = `btn ${BTN_CLASS[rank]} position-relative`;
+        if (!selected_reason && !reason) {
             cls += " active";
         }
         let btn = $(`<button>${name}</button>`).attr({
@@ -97,9 +98,35 @@ $(function() {
             btn.click(select_member_event);
         }
         box.append(btn);
+
+        if (reason) {
+            add_badge(btn, reason.slice(-1));
+        }
         $(`${RANKS[rank]}-list`).append(box);
         member_rank[id] = rank;
         return id;
+    }
+
+
+    function add_badge(button, value) {
+        let badge_id = `bge-${button.attr("id")}`;
+        let badge = $(`#${badge_id}`);
+        if (badge.length) {
+            badge.html(value);
+        } else {
+            let badge = $(`<span>${value}</span>`).attr({
+                class: `position-absolute top-0 start-100 translate-middle badge rounded-pill ${BADGE_COLOR}`,
+                id: badge_id
+            });
+            button.append(badge);
+            button.addClass("me-2");
+        }
+    }
+
+
+    function remove_badge(button) {
+        button.removeClass("me-2");
+        $(`#bge-${button.attr("id")}`).remove();
     }
 
 
@@ -162,6 +189,7 @@ $(function() {
             let detail = JSON.parse(localStorage.getItem(`m-${id}`));
             if (detail["reason"] && reasons_to_delete.has(hash(detail["reason"]))) {
                 detail["reason"] = "";
+                remove_badge($(`#${id}`));
                 localStorage.setItem(`m-${id}`, JSON.stringify(detail));
                 member_num[detail["rank"]]++;
             }
@@ -238,6 +266,7 @@ $(function() {
                 member_num[rank]--;
                 update_ui(rank);
             }
+            add_badge($(this), selected_reason.slice(-1));
             detail["reason"] = selected_reason;
             localStorage.setItem(key, JSON.stringify(detail));
         }
@@ -257,6 +286,7 @@ $(function() {
 
             let key = `m-${$(this).attr("id")}`;
             let detail = JSON.parse(localStorage.getItem(key));
+            remove_badge($(this));
             detail["reason"] = "";
             localStorage.setItem(key, JSON.stringify(detail));
         }
