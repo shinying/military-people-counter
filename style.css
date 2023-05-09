@@ -14,3 +14,7 @@
     color: var(--bs-secondary);
     background-color: transparent !important;
 }
+.btn-outline-primary:not(.active):hover {
+    color: var(--bs-primary);
+    background-color: transparent !important;
+}
