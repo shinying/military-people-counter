@@ -1,7 +1,3 @@
-.hidden {
-    visibility: hidden;
-}
-
 .btn-outline-danger:not(.active):hover {
     color: var(--bs-danger);
     background-color: transparent !important;

@@ -4,6 +4,7 @@ const SOILDER_BTN = "btn-outline-secondary";
 const BADGE_COLOR = "bg-dark";
 const RANKS = ["#officer", "#sergeant", "#soilder"];
 const BTN_CLASS = [OFFICER_BTN, SERGENT_BTN, SOILDER_BTN];
+const backend = "https://baoge.fly.dev"
 
 
 $(function() {
@@ -35,7 +36,7 @@ $(function() {
     
 
     function read_from_local() {
-        if (localStorage.length == 0)
+        if (localStorage.length === 0)
             return;
         if (!localStorage.hasOwnProperty("reasons") && !localStorage.hasOwnProperty("members")) {
             console.log("No reasons and members. Clear localStorage")
@@ -429,7 +430,7 @@ $(function() {
     });
 
 
-    $("#delete-all-btn").click(function() {
+    function delete_everything() {
         for (const member of members) {
             $(`#div-${member}`).remove();
         }
@@ -445,5 +446,72 @@ $(function() {
         member_num.fill(0);
         update_ui();
         localStorage.clear();
+    }
+    
+    $("#delete-all-btn").click(delete_everything)
+
+
+    $("#share-btn").click(function() {
+        $("#share-result").html("<div class=\"spinner-border\" role=\"status\"></div>")
+    })    
+
+    $("#gen-share-code-btn").click(function() {
+        if (localStorage.length === 0 ||
+            !localStorage.hasOwnProperty("reasons") || !localStorage.hasOwnProperty("members")) {
+            $("#share-result").html(
+                `<h1 class=\"text-danger\">資料不足</h1>`);
+            return;
+        }
+        $.ajax({
+            url: `${backend}/share`,
+            method: "POST",
+            contentType: "application/json; charset=UTF-8",
+            dataType: "json",
+            data: JSON.stringify(localStorage),
+            timeout: 10000,
+
+            success: function(res) {
+                $("#share-result").html(
+                    `<h1 class=\"text-success\" style=\"font-size:3rem\">${res["code"]}</h1>`);
+            },
+            error:function(err){
+                $("#share-result").html(
+                    `<h3 class=\"text-danger\">分享失敗QQ</h3>`);
+                console.log(err)
+            },
+          });
+    });
+
+
+    $("#retrieve-btn").click(function() {
+        let code = parseInt($("#input-share-code").val());
+        $("#input-share-code").val('');
+
+        $.ajax({
+            url: `${backend}/retrieve`,
+            method: "POST",
+            contentType: "application/json; charset=UTF-8",
+            dataType: "json",
+            data: JSON.stringify({"code": code}),
+            timeout: 10000,
+
+            success: function(res) {
+                delete_everything();
+                for (let key in res) {
+                    localStorage.setItem(key, res[key]);
+                }
+                read_from_local();
+                $("#share-result").html(
+                    `<h1 class=\"text-success\">擷取成功</h1>`);
+                $('#share-dialogue-2').modal('hide');
+            },
+            error:function(err){
+                $("#share-result").html(
+                    `<h1 class=\"text-danger\">代碼無效</h1>`);
+                console.log(err)
+            },
+          });
     })
+
+
 });
