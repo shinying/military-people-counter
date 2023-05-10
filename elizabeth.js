@@ -333,6 +333,8 @@ $(function() {
             $("#deletion-btn").html("<i class=\"bi bi-trash3\"></i>");
             $("#options-btn").css("opacity", "1");
             $("#options-btn").click(toggle_options);
+            reasons_to_delete.clear();
+            members_to_delete.clear();
             reasons.forEach(reason => {
                 deactivate($(`#${reason}`), select_reason_event);
             });
