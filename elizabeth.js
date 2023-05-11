@@ -21,7 +21,7 @@ $(function() {
     let members_to_delete = new Set();
     let reasons_to_delete = new Set();
 
-    let hash = function(value) { return MD5.generate(value).substr(16); };
+    let hash = function(value) { return MD5.generate(value).substring(16); };
 
     function activate(item, fn) {
         item.addClass("active");
