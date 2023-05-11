@@ -1,16 +1,20 @@
-.btn-outline-danger:not(.active):hover {
-    color: var(--bs-danger);
-    background-color: transparent !important;
-}
-.btn-outline-info:not(.active):hover {
-    color: var(--bs-info);
+.btn-outline-primary:not(.active):hover {
+    color: var(--bs-primary);
     background-color: transparent !important;
 }
 .btn-outline-secondary:not(.active):hover {
     color: var(--bs-secondary);
     background-color: transparent !important;
 }
-.btn-outline-primary:not(.active):hover {
-    color: var(--bs-primary);
+.btn-outline-success:not(.active):hover {
+    color: var(--bs-success);
+    background-color: transparent !important;
+}
+.btn-outline-danger:not(.active):hover {
+    color: var(--bs-danger);
+    background-color: transparent !important;
+}
+.btn-outline-info:not(.active):hover {
+    color: var(--bs-info);
     background-color: transparent !important;
 }

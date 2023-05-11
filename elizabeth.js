@@ -1,14 +1,15 @@
 const OFFICER_BTN = "btn-outline-danger";
 const SERGENT_BTN = "btn-outline-info";
 const SOILDER_BTN = "btn-outline-secondary";
+const CADET_BTN = "btn-outline-success"
 const BADGE_COLOR = "bg-dark";
-const RANKS = ["#officer", "#sergeant", "#soilder"];
-const BTN_CLASS = [OFFICER_BTN, SERGENT_BTN, SOILDER_BTN];
+const RANKS = ["#officer", "#sergeant", "#soilder", "#cadet"];
+const BTN_CLASS = [OFFICER_BTN, SERGENT_BTN, SOILDER_BTN, CADET_BTN];
 const backend = "https://baoge.fly.dev"
 
 
 $(function() {
-    let member_num = [0, 0, 0];
+    let member_num = [0, 0, 0, 0];
     let member_rank = {};
     
     let selected_reason;
