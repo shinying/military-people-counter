@@ -334,6 +334,7 @@ $(function() {
             $("#deletion-btn").html("<i class=\"bi bi-trash3\"></i>");
             $("#options-btn").css("opacity", "1");
             $("#options-btn").click(toggle_options);
+            $("#options-btn").attr("data-bs-target", "#add-new-div");
             reasons_to_delete.clear();
             members_to_delete.clear();
             reasons.forEach(reason => {
@@ -345,6 +346,7 @@ $(function() {
             $("#deletion-btn").html("<i class=\"bi bi-trash3-fill\"></i>");
             $("#options-btn").css("opacity", "0.5");
             $("#options-btn").off("click");
+            $("#options-btn").attr("data-bs-target", "");
 
             reasons.forEach(reason => {
                 deactivate($(`#${reason}`), select_reason_event);
